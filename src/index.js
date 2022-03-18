@@ -20,4 +20,6 @@ console.log('store',store)
 
 //console.log('AFTER STATE',store.getState())
 
-ReactDOM.render(<App store={store}/>,document.getElementById('root'));
+ReactDOM.render(
+<App store={store}/>,
+document.getElementById('root'));
