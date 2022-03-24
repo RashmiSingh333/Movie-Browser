@@ -13,6 +13,8 @@ export const ADD_MOVIES = 'ADD_MOVIES'
 export const ADD_TO_FAVOURITES = 'ADD_TO_FAVOURITES'
 export const REMOVE_FROM_FAVOURITES=  'REMOVE_FROM_FAVOURITES'
 export const SET_SHOW_FAVOURITES ='SET_SHOW_FAVOURITES'
+export const ADD_FROM_SEARCH_TO_MOVIE = 'ADD_FROM_SEARCH_TO_MOVIE'
+
 
 
 //ACTION CREATORS
@@ -45,3 +47,35 @@ export function addFavourite (movie) {
          val
      }
  }
+
+ export const ADD_TO_SEARCH = 'ADD_TO_SEARCH'
+
+ function addToSearch(movie){
+     console.log('search result ->',movie);
+     return {
+         type:ADD_TO_SEARCH,
+         movie
+     }
+ }
+
+ export function searchResult(movie)
+{
+    console.log('inside seacrh result ', movie);
+    return function (dispatch) {
+        fetch(`http://www.omdbapi.com/?apikey=416455a5&t=${movie}`)
+        .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+                dispatch(addToSearch(data));
+            });
+    }
+}
+
+
+export function addFromSearchMovie(movie)
+{
+    return {
+        type: ADD_FROM_SEARCH_TO_MOVIE,
+        movie
+    }
+}
