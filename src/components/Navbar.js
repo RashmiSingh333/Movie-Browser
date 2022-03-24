@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {StoreContext} from '../index'
+
 import {addFromSearchMovie ,searchResult } from '../actions/index'
 
 
@@ -24,6 +26,7 @@ class Navbar extends React.Component {
     }
     render (){
         console.log('searchValue',this.state.searchValue);
+        console.log('inside navbar : ', StoreContext.Consumer);
         const {result,showNavBar } = this.props.search
         return (
             <div className="nav">

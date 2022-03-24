@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {createContext} from 'react';
 import ReactDOM from 'react-dom';
 import { createStore ,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk'
@@ -30,6 +30,7 @@ const logger = ({dispatch,getState})  => next => (action)=>{
      console.log('ACTION_TYPE = ',action.type);
      next(action)
 }
+
 //const store = createStore(movies);
 const store = createStore( rootReducer ,applyMiddleware(logger,thunk));
 console.log('store',store)
@@ -44,6 +45,24 @@ console.log('store',store)
 
 //console.log('AFTER STATE',store.getState())
 
+
+
+export const StoreContext = createContext();
+
+class Provider extends React.Component{
+    render()
+    {
+        const { store } = this.props;
+        return <StoreContext.Provider value = {store}>
+          {this.props.children}
+        </StoreContext.Provider>
+    }
+}
+
 ReactDOM.render(
-<App store={store}/>,
-document.getElementById('root'));
+    <Provider store={store}>
+        <App store={store} />
+        {/* note the props store is not needed to pass without this itll work */}
+    </Provider>,
+document.getElementById('root')
+);
